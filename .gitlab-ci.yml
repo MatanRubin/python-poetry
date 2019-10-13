@@ -1,0 +1,23 @@
+variables:
+  DOCKER_DRIVER: overlay2
+  IMAGE_NAME: python-poetry
+  IMAGE_VERSION: 3.7
+
+stages:
+  - build
+  - push
+
+build:
+  image: docker:18.09
+  stage: build
+  script:
+    - docker build -t ${GS_DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_VERSION} .
+
+push:
+  image: docker:18.09
+  stage: push
+  script:
+    - docker login -u ${ARTIFACTORY_WRITE_USER} -p ${ARTIFACTORY_WRITE_PASSWORD} ${GS_DOCKER_REGISTRY}
+    - docker push ${GS_DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_VERSION}
+  only:
+    - master
