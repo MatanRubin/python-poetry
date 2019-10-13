@@ -1,7 +1,7 @@
 variables:
   DOCKER_DRIVER: overlay2
   IMAGE_NAME: python-poetry
-  IMAGE_VERSION: 3.7
+  IMAGE_VERSION: "3.7"
 
 stages:
   - build
